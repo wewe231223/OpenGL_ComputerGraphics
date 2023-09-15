@@ -9,11 +9,10 @@
 
 
 #include "GL_System.h"
+#include "MainDisplayFunc.h"
 
 
-GLvoid drawScene(GLvoid);
-GLvoid ReShape(int w, int h);
-GLvoid KeyboardIO(unsigned char key, int x, int y);
+
 
 
 void main(int argc, char** argv) {
@@ -25,7 +24,7 @@ void main(int argc, char** argv) {
 
 
 
-	dp::Display_Properties Maindp(FULLHDX, FULLHDY, 100, 100);
+	dp::Display_Properties Maindp(860, 600, 100, 100);
 	gls::GL_System* GLS = new gls::GL_System(Main_Th, Maindp, "This is Main Display");
 
 
@@ -41,11 +40,10 @@ void main(int argc, char** argv) {
 
 
 	GLS->GetMainDisplay()->SetThisWindow();
-	glutDisplayFunc(drawScene);
-	glutReshapeFunc(ReShape);
-	glutKeyboardFunc(KeyboardIO);
-
-
+	glutDisplayFunc(MainFunction::drawScene);
+	glutReshapeFunc(MainFunction::ReShape);
+	glutKeyboardFunc(MainFunction::KeyboardInput);
+	glutKeyboardUpFunc(MainFunction::KeyboardUPInput);
 
 
 
@@ -57,36 +55,3 @@ void main(int argc, char** argv) {
 }
 
 
-GLvoid drawScene() {
-
-
-
-	glClearColor(0.0f, 0.0f, 1.0f, 1.0f);
-	glClear(GL_COLOR_BUFFER_BIT);
-
-	glutSwapBuffers();
-
-}
-
-
-GLvoid ReShape(int w, int h) {
-
-
-	glViewport(0, 0, w, h);
-
-}
-
-
-GLvoid KeyboardIO(unsigned char key, int x, int y) {
-	switch (key)
-	{
-	case 'f':
-		std::cout << "f is pushed" << std::endl;
-		glClearColor(1.0f, 0.0f, 0.0f, 0.0f);
-		glClear(GL_COLOR_BUFFER_BIT);
-		glutPostRedisplay();
-		break;
-	default:
-		break;
-	}
-}

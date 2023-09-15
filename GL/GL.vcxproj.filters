@@ -21,9 +21,15 @@
     <ClCompile Include="GL_System.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="MainDisplayFunc.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GL_System.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="MainDisplayFunc.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>

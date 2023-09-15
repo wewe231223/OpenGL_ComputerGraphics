@@ -31,15 +31,9 @@ typedef struct _ThreadHandler {
 	char** argv;
 }ThreadHandle;
 
-
-typedef struct _GLColor {
-	float R;
-	float G;
-	float B;
-	float A;
-}GLColor;
-
 #endif
+
+
 
 
 namespace dp {
@@ -72,6 +66,8 @@ namespace gld {
 		void SetThisWindow();
 	};
 }
+
+
 
 
 
