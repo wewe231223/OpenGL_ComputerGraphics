@@ -90,9 +90,12 @@ namespace gls {
 
 	public:
 
-		GL_System(const ThreadHandle&, const dp::Display_Properties&, const char*);
+		GL_System(const ThreadHandle&, const gld::GLDisplay*);
 		
 		gld::GLDisplay* GetMainDisplay();
+		void ApplyMainDisplay(gld::GLDisplay*);
+
+
 		void Loop();
 	};
 

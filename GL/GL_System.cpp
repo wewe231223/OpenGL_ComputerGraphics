@@ -30,12 +30,19 @@ gld::GLDisplay::GLDisplay() {
 
 gld::GLDisplay::GLDisplay(const dp::Display_Properties& otherDp, const char* Title) {
 
-	if (!GLUTINITED) exit(EXIT_FAILURE);
+	if (!GLUTINITED) {
+		std::cout << "Display Initialization Failed" << std::endl;
+		exit(EXIT_FAILURE);
+	}
+	
+	
 	this->Dp = new dp::Display_Properties(otherDp);
-	// GLinit이 되어있지 않다면 GLUT_IS_NOT_INITIALIZED throw
+	
 	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGBA);
+
 	glutInitWindowPosition(this->Dp->Px, this->Dp->Py);
 	glutInitWindowSize(this->Dp->Sw, this->Dp->Sh);
+
 	this->WindowNo = glutCreateWindow(Title);
 	glutSetWindow(this->WindowNo);
 
@@ -61,10 +68,12 @@ void gld::GLDisplay::SetThisWindow() {
 
 
 
-gls::GL_System::GL_System(const ThreadHandle& Th, const dp::Display_Properties& MainDp, const char* MainDisplayTitle) {
+gls::GL_System::GL_System(const ThreadHandle& Th,const gld::GLDisplay* Maindisplay) {
 	glutInit(Th.argcp, Th.argv);
 	GLUTINITED = true;
-	this->MainDisplay = new gld::GLDisplay(MainDp, MainDisplayTitle);
+	
+	this->MainDisplay = MainDisplay;
+
 	glewExperimental = GL_TRUE;
 	if (glewInit() != GLEW_OK) {
 
@@ -75,6 +84,13 @@ gls::GL_System::GL_System(const ThreadHandle& Th, const dp::Display_Properties& 
 		std::cout << "GLEW INITIALIZED " << std::endl;
 	}
 }
+
+
+void gls::GL_System::ApplyMainDisplay(gld::GLDisplay* Maindisplay) {
+	this->MainDisplay = Maindisplay;
+}
+
+
 
 
 gls::GL_System::~GL_System() {
