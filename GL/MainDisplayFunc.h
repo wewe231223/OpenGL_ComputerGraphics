@@ -7,6 +7,7 @@
 #include <gl/freeglut.h>
 #include <gl/freeglut_ext.h>
 
+
 #include <iostream>
 #include <random>
 
@@ -23,7 +24,30 @@ typedef struct _GLColor {
 #endif
 
 
-namespace MainFunction {
+
+
+
+
+
+
+namespace PrivateFuction {
+	namespace Colors {
+		enum ColorName;
+
+		void NewColor(GLColor&, GLColor&, ColorName);
+
+
+	}
+
+
+
+
+
+}
+
+
+
+namespace FunctionSet_1 {
 
 
 	GLvoid drawScene(GLvoid);
@@ -41,20 +65,29 @@ namespace MainFunction {
 
 }
 
-namespace PrivateFuction {
-	namespace Colors {
-		enum ColorName;
+namespace FunctionSet_2 {
 
-		void NewColor(GLColor&,GLColor&,ColorName);
-		
-
-	}
-
+	GLvoid drawScene(GLvoid);
 
 
 
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

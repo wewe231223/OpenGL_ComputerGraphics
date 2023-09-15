@@ -8,8 +8,6 @@ typedef int GLSERROR;
 #define GLUT_IS_NOT_INITIALIZED 0x01
 
 #include <iostream>
-#include <memory>
-#include <vector>
 
 
 #include <gl/glew.h>

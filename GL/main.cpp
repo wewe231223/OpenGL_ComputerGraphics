@@ -15,7 +15,7 @@
 
 
 
-void main(int argc, char** argv) {
+int main(int argc, char** argv) {
 
 	ThreadHandle Main_Th{};
 	Main_Th.argcp = &argc;
@@ -40,10 +40,22 @@ void main(int argc, char** argv) {
 
 
 	GLS->GetMainDisplay()->SetThisWindow();
-	glutDisplayFunc(MainFunction::drawScene);
-	glutReshapeFunc(MainFunction::ReShape);
-	glutKeyboardFunc(MainFunction::KeyboardInput);
-	glutKeyboardUpFunc(MainFunction::KeyboardUPInput);
+
+
+
+	glutDisplayFunc(FunctionSet_1::drawScene);
+	glutReshapeFunc(FunctionSet_1::ReShape);
+
+	glutKeyboardFunc(FunctionSet_1::KeyboardInput);
+	glutKeyboardUpFunc(FunctionSet_1::KeyboardUPInput);
+	
+	
+	glutTimerFunc(1,FunctionSet_1::MyTimer,1);
+
+
+
+
+	//glutDisplayFunc(FunctionSet_2::drawScene);
 
 
 
@@ -52,6 +64,8 @@ void main(int argc, char** argv) {
 
 
 	GLS->Loop();
+
+	return 0;
 }
 
 

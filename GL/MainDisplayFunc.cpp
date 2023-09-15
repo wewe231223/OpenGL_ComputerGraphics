@@ -26,6 +26,11 @@ namespace PrivateFuction {
 			Blue,
 			Red,
 			Green,
+			Turquoise,
+			Magenta,
+			Yellow,
+			White,
+			Black,
 			Rand
 		};
 		
@@ -38,17 +43,59 @@ namespace PrivateFuction {
 				MainColor.G = MemColor.G;
 				MainColor.B = MemColor.B;
 				MainColor.A = MemColor.A;
+
+
+				return;
+			}
+
+			if (c == ColorName::Turquoise) {
+				MainColor.R = 0.0f;
+				MainColor.G = 1.0f;
+				MainColor.B = 1.0f;
+				MainColor.A = 1.0f;
+
+				return;
+			}
+
+			if (c == ColorName::Magenta) {
+				MainColor.R = 1.0f;
+				MainColor.G = 0.0f;
+				MainColor.B = 1.0f;
+				MainColor.A = 1.0f;
+
+				return;
+			}
+
+			if (c == ColorName::Yellow) {
+				MainColor.R = 1.0f;
+				MainColor.G = 1.0f;
+				MainColor.B = 0.0f;
+				MainColor.A = 1.0f;
+
+				return;
+			}
+
+
+			if (c == ColorName::White) {
+				MainColor.R = 1.0f;
+				MainColor.G = 1.0f;
+				MainColor.B = 1.0f;
+				MainColor.A = 1.0f;
+
+				return;
+			}
+
+			if (c == ColorName::Black) {
+				MainColor.R = 0.0f;
+				MainColor.G = 0.0f;
+				MainColor.B = 0.0f;
+				MainColor.A = 0.0f;
+
+				return;
 			}
 
 
 			if (c == ColorName::Blue) {
-				MemColor.R = MainColor.R;
-				MemColor.G = MainColor.G;
-				MemColor.B = MainColor.B;
-				MemColor.A = MainColor.A;
-
-
-
 				MainColor.R = 0.0f;
 				MainColor.G = 0.0f;
 				MainColor.B = 1.0f;
@@ -73,15 +120,9 @@ namespace PrivateFuction {
 
 
 			if (c == ColorName::Green) {
-				MemColor.R = MainColor.R;
-				MemColor.G = MainColor.G;
-				MemColor.B = MainColor.B;
-				MemColor.A = MainColor.A;
-
-
 
 				MainColor.R = 0.0f;
-				MainColor.G = 1.0f;
+				MainColor.G = 0.0f;
 				MainColor.B = 0.0f;
 				MainColor.A = 1.0f;
 				return;
@@ -93,7 +134,7 @@ namespace PrivateFuction {
 				MainColor.B = static_cast<float>(MainFunctionVariables::dis(MainFunctionVariables::gen));
 				MainColor.A = 1.0f;
 
-
+				return;
 			}
 
 
@@ -108,7 +149,7 @@ namespace PrivateFuction {
 
 
 
-GLvoid MainFunction::drawScene() {
+GLvoid FunctionSet_1::drawScene() {
 
 
 
@@ -120,7 +161,7 @@ GLvoid MainFunction::drawScene() {
 }
 
 
-GLvoid MainFunction::ReShape(int w, int h) {
+GLvoid FunctionSet_1::ReShape(int w, int h) {
 
 
 	glViewport(0, 0, w, h);
@@ -129,16 +170,39 @@ GLvoid MainFunction::ReShape(int w, int h) {
 
 
 
-GLvoid MainFunction::KeyboardInput(unsigned char key, int x, int y) {
+GLvoid FunctionSet_1::KeyboardInput(unsigned char key, int x, int y) {
 	switch (key)
 	{
-	case 'f':
+	case 'c':
 		
 		PrivateFuction::Colors::NewColor(
 			MainFunctionVariables::DisplayColor, 
 			MainFunctionVariables::MemoryColor, 
-			PrivateFuction::Colors::ColorName::Blue);
+			PrivateFuction::Colors::ColorName::Turquoise);
 		
+		glClear(GL_COLOR_BUFFER_BIT);
+		break;
+
+
+
+
+
+	case 'm':
+		PrivateFuction::Colors::NewColor(
+			MainFunctionVariables::DisplayColor,
+			MainFunctionVariables::MemoryColor,
+			PrivateFuction::Colors::ColorName::Magenta);
+
+		glClear(GL_COLOR_BUFFER_BIT);
+		break;
+
+
+	case 'y':
+		PrivateFuction::Colors::NewColor(
+			MainFunctionVariables::DisplayColor,
+			MainFunctionVariables::MemoryColor,
+			PrivateFuction::Colors::ColorName::Yellow);
+
 		glClear(GL_COLOR_BUFFER_BIT);
 		break;
 
@@ -151,10 +215,33 @@ GLvoid MainFunction::KeyboardInput(unsigned char key, int x, int y) {
 		glClear(GL_COLOR_BUFFER_BIT);
 		break;
 
+	case 'w':
+		PrivateFuction::Colors::NewColor(
+			MainFunctionVariables::DisplayColor,
+			MainFunctionVariables::MemoryColor,
+			PrivateFuction::Colors::ColorName::White);
+
+		glClear(GL_COLOR_BUFFER_BIT);
+		break;
+
+	case 'k':
+		PrivateFuction::Colors::NewColor(
+			MainFunctionVariables::DisplayColor,
+			MainFunctionVariables::MemoryColor,
+			PrivateFuction::Colors::ColorName::Black);
+
+		glClear(GL_COLOR_BUFFER_BIT);
+		break;
+
+
+
+
+
+	
 
 	case 't':
 		MainFunctionVariables::TimerEnable = true;
-		glutTimerFunc(100, MainFunction::MyTimer, 1);
+		glutTimerFunc(100, FunctionSet_1::MyTimer, 1);
 		break;
 
 	case 'q':
@@ -168,7 +255,7 @@ GLvoid MainFunction::KeyboardInput(unsigned char key, int x, int y) {
 
 }
 
-GLvoid MainFunction::MyTimer(int Value) {
+GLvoid FunctionSet_1::MyTimer(int Value) {
 
 	PrivateFuction::Colors::NewColor(
 		MainFunctionVariables::DisplayColor,
@@ -178,19 +265,48 @@ GLvoid MainFunction::MyTimer(int Value) {
 	glutPostRedisplay();
 
 
-	if(MainFunctionVariables::TimerEnable)glutTimerFunc(100, MainFunction::MyTimer, 1);
+	if(MainFunctionVariables::TimerEnable)glutTimerFunc(100, FunctionSet_1::MyTimer, 1);
 }
 
-GLvoid MainFunction::KeyboardUPInput(unsigned char key, int x, int y) {
+GLvoid FunctionSet_1::KeyboardUPInput(unsigned char key, int x, int y) {
 
 	if (key == 't') {
 		MainFunctionVariables::TimerEnable = false;
 	}
-	PrivateFuction::Colors::NewColor(
-		MainFunctionVariables::DisplayColor,
-		MainFunctionVariables::MemoryColor,
-		PrivateFuction::Colors::ColorName::Mem);
 
 
 	glutPostRedisplay();
 }
+
+
+
+
+GLvoid FunctionSet_2::drawScene(GLvoid) {
+
+	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+	glClear(GL_COLOR_BUFFER_BIT);
+
+
+	glColor3f(0.0f, 1.0f, 0.0f);
+	glRectf(-1.f, 0 , 0 , 1.f );
+
+	glColor3f(1.0f, 1.0f, 0.0f);
+	glRectf(-1.f, -1.f, 0, 0);
+
+
+	glColor3f(0.0f, 1.0f, 1.0f);
+	glRectf(0, 0, 1.f, 1.f);
+
+	glColor3f(0.5f, 0.5f, 0.5f);
+	glRectf(0, -1.f, 1.f, 0);
+
+
+
+
+	glutSwapBuffers();
+
+}
+
+
+
+
