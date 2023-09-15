@@ -26,10 +26,7 @@ void main(int argc, char** argv) {
 
 
 	dp::Display_Properties Maindp(FULLHDX, FULLHDY, 100, 100);
-
-
-
-	gls::GL_System* GLS = new gls::GL_System(Main_Th, new gld::GLDisplay(Maindp,"This is Main Display"));
+	gls::GL_System* GLS = new gls::GL_System(Main_Th, Maindp, "This is Main Display");
 
 
 
@@ -56,7 +53,7 @@ void main(int argc, char** argv) {
 
 
 
-	glutMainLoop();
+	GLS->Loop();
 }
 
 
