@@ -130,13 +130,17 @@
   <ItemGroup>
     <ClCompile Include="GL_System.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="MainDisplayFunc.cpp" />
+    <ClCompile Include="Scene_2.cpp" />
+    <ClCompile Include="Scene_1.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GL_System.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
     </ClInclude>
-    <ClInclude Include="MainDisplayFunc.h" />
+    <ClInclude Include="hhh.h" />
+    <ClInclude Include="Scene_2.h" />
+    <ClInclude Include="Scene_1.h" />
+    <ClInclude Include="Struct.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

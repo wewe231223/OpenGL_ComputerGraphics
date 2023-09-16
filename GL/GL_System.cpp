@@ -51,10 +51,75 @@ void gld::GLDisplay::ModifyTitle(const char* newTitle) {
 
 
 void gld::GLDisplay::SetThisWindow() {
-	glutSetWindow(this->WindowNo);
+	if (glutGetWindow() != this->WindowNo) {
+		glutSetWindow(this->WindowNo);		
+	}
 }
 
+void gld::GLDisplay::ResisterCallBackFunc(CallbackFunc Cf)
+{
+	this->SetThisWindow();
+	
+	this->CallBack.DrawCall = Cf.DrawCall;
+	if (this->CallBack.DrawCall != nullptr) {
+		glutDisplayFunc(this->CallBack.DrawCall);
+	}
 
+
+	this->CallBack.IdleCall = Cf.IdleCall;
+	if (this->CallBack.IdleCall != nullptr) {
+		glutIdleFunc(this->CallBack.IdleCall);
+	}
+
+
+
+	this->CallBack.KeyboardInputCall = Cf.KeyboardInputCall;
+	if (this->CallBack.KeyboardInputCall != nullptr) {
+		glutKeyboardFunc(this->CallBack.KeyboardInputCall);
+	}
+
+
+
+	this->CallBack.KeyboardOffCall = Cf.KeyboardOffCall;
+	if (this->CallBack.KeyboardOffCall != nullptr) {
+		glutKeyboardUpFunc(this->CallBack.KeyboardOffCall);
+	}
+
+
+
+
+	this->CallBack.KeyboardSpecialInputCall = Cf.KeyboardSpecialInputCall;
+	if (this->CallBack.KeyboardSpecialInputCall != nullptr) {
+		glutSpecialFunc(this->CallBack.KeyboardSpecialInputCall);
+	}
+
+
+
+	this->CallBack.ReShapeCall = Cf.ReShapeCall;
+	if (this->CallBack.ReShapeCall != nullptr) {
+		glutReshapeFunc(this->CallBack.ReShapeCall);
+	}
+
+
+	this->CallBack.TimerCall = Cf.TimerCall;
+	if (this->CallBack.TimerCall != nullptr) {
+		glutTimerFunc(1,this->CallBack.TimerCall,1);
+	}
+
+
+	this->CallBack.MouseDragCall = Cf.MouseDragCall;
+
+	if (this->CallBack.MouseDragCall != nullptr) {
+		glutMotionFunc(this->CallBack.MouseDragCall);
+	}
+	
+	
+
+
+	
+
+
+}
 
 
 

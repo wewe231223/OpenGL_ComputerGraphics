@@ -15,20 +15,12 @@ typedef int GLSERROR;
 #include <gl/freeglut_ext.h>
 
 
+#include "Struct.h"
 
 
 #ifndef _GLUINITED_IS_DEFINED
 #define _GLUINITED_IS_DEFINED
 static bool GLUTINITED = false;
-#endif
-
-#ifndef _GLSYS_STRUCT_NOT_DEFINED
-#define _GLSYS_STRUCT_NOT_DEFINED
-typedef struct _ThreadHandler {
-	int* argcp;
-	char** argv;
-}ThreadHandle;
-
 #endif
 
 
@@ -56,12 +48,26 @@ namespace gld {
 
 	private:
 		dp::Display_Properties* Dp = nullptr;
+		CallbackFunc CallBack;
+
+
+
+
 		int WindowNo;
 	public:
 		GLDisplay();
 		GLDisplay(const dp::Display_Properties&, const char*);
 		void ModifyTitle(const char*);
 		void SetThisWindow();
+
+
+
+
+	public:
+
+		void ResisterCallBackFunc(CallbackFunc Cf);
+
+
 	};
 }
 
@@ -80,6 +86,7 @@ namespace gls {
 	private:
 		gld::GLDisplay* MainDisplay = nullptr;
 
+
 		~GL_System();
 
 	public:
@@ -87,6 +94,9 @@ namespace gls {
 		GL_System(const ThreadHandle&, const dp::Display_Properties&, const char*);
 		
 		gld::GLDisplay* GetMainDisplay();
+
+
+
 		void Loop();
 	};
 

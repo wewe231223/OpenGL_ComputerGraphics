@@ -21,7 +21,10 @@
     <ClCompile Include="GL_System.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="MainDisplayFunc.cpp">
+    <ClCompile Include="Scene_1.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene_2.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
@@ -29,7 +32,16 @@
     <ClInclude Include="GL_System.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="MainDisplayFunc.h">
+    <ClInclude Include="Scene_1.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Struct.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="hhh.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene_2.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>

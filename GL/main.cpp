@@ -8,9 +8,7 @@
 #include <gl/freeglut_ext.h>
 
 
-#include "GL_System.h"
-#include "MainDisplayFunc.h"
-
+#include "hhh.h"
 
 
 
@@ -39,29 +37,29 @@ int main(int argc, char** argv) {
 
 
 
+	// if use over 1 display, pleaase change main display
 	GLS->GetMainDisplay()->SetThisWindow();
 
 
+	GLS->GetMainDisplay()->ResisterCallBackFunc(( Scene2_CallbackFuctions::CreateCallBackFunc() ));
 
-	glutDisplayFunc(FunctionSet_1::drawScene);
-	glutReshapeFunc(FunctionSet_1::ReShape);
 
-	glutKeyboardFunc(FunctionSet_1::KeyboardInput);
-	glutKeyboardUpFunc(FunctionSet_1::KeyboardUPInput);
+	//glutDisplayFunc(FunctionSet_1::drawScene);
+	//glutReshapeFunc(FunctionSet_1::ReShape);
+
+	//glutKeyboardFunc(FunctionSet_1::KeyboardInput);
+	//glutKeyboardUpFunc(FunctionSet_1::KeyboardUPInput);
+	//
+	//
+	//glutTimerFunc(1,FunctionSet_1::MyTimer,1);
+
+
+
+
+
+
 	
 	
-	glutTimerFunc(1,FunctionSet_1::MyTimer,1);
-
-
-
-
-	//glutDisplayFunc(FunctionSet_2::drawScene);
-
-
-
-
-
-
 
 	GLS->Loop();
 
