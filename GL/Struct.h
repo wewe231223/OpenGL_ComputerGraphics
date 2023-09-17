@@ -14,14 +14,15 @@ typedef struct _ThreadHandler {
 
 
 typedef struct _CALLBACKFUNC {
-	GLvoid(*DrawCall)					(GLvoid) = nullptr;
-	GLvoid(*ReShapeCall)				(int, int) = nullptr;
-	GLvoid(*KeyboardInputCall)			(unsigned char, int, int) = nullptr;
-	GLvoid(*KeyboardSpecialInputCall)	(int, int, int) = nullptr;
-	GLvoid(*KeyboardOffCall)			(unsigned char, int, int) = nullptr;
-	GLvoid(*TimerCall)					(int) = nullptr;
-	GLvoid(*IdleCall)					(GLvoid) = nullptr;
-	GLvoid(*MouseDragCall)				(int, int) = nullptr;
+	GLvoid(*DrawCall)					(GLvoid)					= nullptr;
+	GLvoid(*ReShapeCall)				(int, int)					= nullptr;
+	GLvoid(*KeyboardInputCall)			(unsigned char, int, int)	= nullptr;
+	GLvoid(*KeyboardSpecialInputCall)	(int, int, int)				= nullptr;
+	GLvoid(*KeyboardOffCall)			(unsigned char, int, int)	= nullptr;
+	GLvoid(*TimerCall)					(int)						= nullptr;
+	GLvoid(*IdleCall)					(GLvoid)					= nullptr;
+	GLvoid(*MouseCall)					(int, int, int, int)		= nullptr;
+	GLvoid(*MouseDragCall)				(int, int)					= nullptr;
 
 
 
@@ -36,9 +37,23 @@ typedef struct _Rect3f {
 	float LeftDownY;
 	float RightUpX;
 	float RightUpY;
-
-
 }Rect3f;
+
+
+
+
+
+
+
+typedef struct _GLColor {
+	float R;
+	float G;
+	float B;
+	float A;
+}GLColor;
+
+
+
 
 
 

@@ -6,23 +6,27 @@
 #include <gl/freeglut_ext.h>
 
 #include <iostream>
+#include <random>
+
 
 #include "Struct.h"
 
 
-namespace Scene2_Variables {
 
 
+namespace Scene2_Functions {
+	Rect3f Reduction(Rect3f, float);
+	bool InsideRect(Rect3f, int, int);
 }
 
-namespace Scene2_Fuctions {
 
-}
-
-
-namespace Scene2_CallbackFuctions {
+namespace Scene2_CallbackFunctions {
 	GLvoid drawScene(GLvoid);
-	
+	GLvoid ReShape(int, int);
+	GLvoid KeyboardInput(unsigned char, int, int);
+
+	GLvoid MouseInput(int, int, int, int);
+
 	GLvoid MouseDragInput(int,int);
 
 

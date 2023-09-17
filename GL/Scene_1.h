@@ -16,20 +16,6 @@
 
 
 
-#ifndef _GLCOLOR_IS_DEFINED
-#define _GLCOLOR_IS_DEFINED
-typedef struct _GLColor {
-	float R;
-	float G;
-	float B;
-	float A;
-}GLColor;
-
-#endif
-
-
-
-
 
 
 
@@ -96,21 +82,7 @@ namespace Scene_1_CallbackFunctions {
 
 
 
-namespace FunctionSet_2 {
 
-
-
-	GLvoid drawScene(GLvoid);
-	GLvoid MoustInput(int, int, int, int);
-
-
-
-
-
-
-
-	CallbackFunc CreateCallBackFunc(void);
-}
 
 
 #endif // _HEDER_Scene1

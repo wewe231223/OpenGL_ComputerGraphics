@@ -107,8 +107,14 @@ void gld::GLDisplay::ResisterCallBackFunc(CallbackFunc Cf)
 	}
 
 
-	this->CallBack.MouseDragCall = Cf.MouseDragCall;
 
+	this->CallBack.MouseCall = Cf.MouseCall;
+	if (this->CallBack.MouseCall != nullptr) {
+		glutMouseFunc(this->CallBack.MouseCall);
+	}
+
+
+	this->CallBack.MouseDragCall = Cf.MouseDragCall;
 	if (this->CallBack.MouseDragCall != nullptr) {
 		glutMotionFunc(this->CallBack.MouseDragCall);
 	}

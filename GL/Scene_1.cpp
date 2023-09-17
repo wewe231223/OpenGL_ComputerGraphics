@@ -241,8 +241,12 @@ GLvoid Scene_1_CallbackFunctions::KeyboardInput(unsigned char key, int x, int y)
 	
 
 	case 't':
+		if (Scene1_Variables::TimerEnable) {
+			Scene1_Variables::TimerEnable = false;
+			break;
+		}
 		Scene1_Variables::TimerEnable = true;
-		glutTimerFunc(100, Scene_1_CallbackFunctions::MyTimer, 1);
+		glutTimerFunc(10, Scene_1_CallbackFunctions::MyTimer, 1);
 		break;
 
 	case 'q':
@@ -272,7 +276,7 @@ GLvoid Scene_1_CallbackFunctions::MyTimer(int Value) {
 GLvoid Scene_1_CallbackFunctions::KeyboardUPInput(unsigned char key, int x, int y) {
 
 	if (key == 't') {
-		Scene1_Variables::TimerEnable = false;
+		//Scene1_Variables::TimerEnable = false;
 	}
 
 

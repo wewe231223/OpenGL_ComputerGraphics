@@ -41,8 +41,9 @@ int main(int argc, char** argv) {
 	GLS->GetMainDisplay()->SetThisWindow();
 
 
-	GLS->GetMainDisplay()->ResisterCallBackFunc(( Scene2_CallbackFuctions::CreateCallBackFunc() ));
+	GLS->GetMainDisplay()->ResisterCallBackFunc(( Scene2_CallbackFunctions::CreateCallBackFunc() ));
 
+	//GLS->GetMainDisplay()->ResisterCallBackFunc((Scene_1_CallbackFunctions::CreateCallBackFunc()));
 
 	//glutDisplayFunc(FunctionSet_1::drawScene);
 	//glutReshapeFunc(FunctionSet_1::ReShape);
