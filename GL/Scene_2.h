@@ -3,11 +3,11 @@
 
 #include <gl/glew.h>
 #include <gl/freeglut.h>
-#include <gl/freeglut_ext.h>
+#include <gl/freeglut_ext.h>	
 
 #include <iostream>
 #include <random>
-
+#include <algorithm>
 
 #include "Struct.h"
 
@@ -17,6 +17,8 @@
 namespace Scene2_Functions {
 	Rect3f Reduction(Rect3f, float);
 	bool InsideRect(Rect3f, int, int);
+
+	void ConvertCoordinate(int, int, float&, float&);
 }
 
 
