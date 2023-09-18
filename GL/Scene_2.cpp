@@ -1,8 +1,8 @@
 #include "Scene_2.h"
 
 #define OriginRatio 1.0f
-#define Ruduction_Coefficient 0.9f
-#define Enrargement_Coefficient 1.1f
+#define Reduction_Coefficient 0.8f
+#define Enrargement_Coefficient 1.25f
 
 namespace Scene2_Variables {
 
@@ -11,6 +11,11 @@ namespace Scene2_Variables {
 	Rect3f rect3{	0.0f,	0.0f,	1.0f,	1.0f};
 	Rect3f rect4{	0.0f,	-1.0f,	1.0f,	0.0f};
 	
+	const Rect3f OriginalRect1{ -1.0f,	0.0f,	0.0f,	1.0f };
+	const Rect3f OriginalRect2{ -1.0f,	-1.0f,	0.0f,	0.0f };
+	const Rect3f OriginalRect3{ 0.0f,	0.0f,	1.0f,	1.0f };
+	const Rect3f OriginalRect4{ 0.0f,	-1.0f,	1.0f,	0.0f };
+
 
 	
 
@@ -53,6 +58,15 @@ namespace Scene2_Variables {
 	1.0f
 	};
 
+
+	GLColor BackGroundColor = {
+		0.0f,
+		0.0f,
+		0.0f,
+		1.0f
+
+	};
+
 }
 
 
@@ -74,26 +88,8 @@ namespace Scene2_Functions {
 
 		std::cout << HalfHeight << " " << HalfWidth <<std::endl;
 
-
-
-
-
-
-
-
-
-
-
 		HalfHeight = HalfHeight * ratio;
 		HalfWidth = HalfWidth * ratio;
-
-
-
-
-
-
-
-		
 
 		result.LeftDownX = CenterX - HalfWidth ;
 		result.LeftDownY = CenterY - HalfHeight;
@@ -155,7 +151,13 @@ namespace Scene2_Functions {
 
 
 GLvoid Scene2_CallbackFunctions::drawScene() {
-	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+	glClearColor(
+		Scene2_Variables::BackGroundColor.R, 
+		Scene2_Variables::BackGroundColor.G, 
+		Scene2_Variables::BackGroundColor.B, 
+		Scene2_Variables::BackGroundColor.A);
+
+
 	glClear(GL_COLOR_BUFFER_BIT);
 
 	std::cout << "ReDrawed ================================================" << std::endl;
@@ -277,48 +279,76 @@ GLvoid Scene2_CallbackFunctions::MouseInput(int Button, int state, int x, int y)
 	if (Button == GLUT_LEFT_BUTTON) {
 		// Left Button
 		if (state == GLUT_DOWN) {
-
 			if (Scene2_Functions::InsideRect(Scene2_Variables::rect1, x, y)) {
-				std::cout << "Mouse Inside !" << std::endl;
-				Scene2_Variables::Rect1_ratio = Scene2_Variables::Rect1_ratio * Ruduction_Coefficient;
-				
-				Scene2_Variables::Rect1_ratio = std::clamp(Scene2_Variables::Rect1_ratio, 0.0001f, 1.0f);
+				Scene2_Variables::RectColor1.R = Scene2_Variables::dis(Scene2_Variables::gen);
+				Scene2_Variables::RectColor1.G = Scene2_Variables::dis(Scene2_Variables::gen);
+				Scene2_Variables::RectColor1.B = Scene2_Variables::dis(Scene2_Variables::gen);
 
-				Scene2_Variables::rect1 = Scene2_Functions::Reduction(Scene2_Variables::rect1, Scene2_Variables::Rect1_ratio);
 
 			}
+			else if(Scene2_Functions::InsideRect(Scene2_Variables::OriginalRect1,x,y)){
 
+
+				Scene2_Variables::BackGroundColor.R  = Scene2_Variables::dis(Scene2_Variables::gen);
+				Scene2_Variables::BackGroundColor.G = Scene2_Variables::dis(Scene2_Variables::gen);
+				Scene2_Variables::BackGroundColor.B = Scene2_Variables::dis(Scene2_Variables::gen);
+
+
+
+
+			}
+			
 
 			if (Scene2_Functions::InsideRect(Scene2_Variables::rect2, x, y)) {
-				std::cout << "Mouse Inside !" << std::endl;
-				Scene2_Variables::Rect2_ratio = Scene2_Variables::Rect2_ratio * Ruduction_Coefficient;
-				
-				Scene2_Variables::Rect2_ratio =  std::clamp(Scene2_Variables::Rect2_ratio, 0.0001f, 1.0f);
+				Scene2_Variables::RectColor2.R = Scene2_Variables::dis(Scene2_Variables::gen);
+				Scene2_Variables::RectColor2.G = Scene2_Variables::dis(Scene2_Variables::gen);
+				Scene2_Variables::RectColor2.B = Scene2_Variables::dis(Scene2_Variables::gen);
 
-				Scene2_Variables::rect2 = Scene2_Functions::Reduction(Scene2_Variables::rect2, Scene2_Variables::Rect2_ratio);
+
 			}
+			else if (Scene2_Functions::InsideRect(Scene2_Variables::OriginalRect2, x, y)) {
 
+				Scene2_Variables::BackGroundColor.R = Scene2_Variables::dis(Scene2_Variables::gen);
+				Scene2_Variables::BackGroundColor.G = Scene2_Variables::dis(Scene2_Variables::gen);
+				Scene2_Variables::BackGroundColor.B = Scene2_Variables::dis(Scene2_Variables::gen);
+
+			}
 
 
 			if (Scene2_Functions::InsideRect(Scene2_Variables::rect3, x, y)) {
-				std::cout << "Mouse Inside !" << std::endl;
-				Scene2_Variables::Rect3_ratio = Scene2_Variables::Rect3_ratio * Ruduction_Coefficient;
+				Scene2_Variables::RectColor3.R = Scene2_Variables::dis(Scene2_Variables::gen);
+				Scene2_Variables::RectColor3.G = Scene2_Variables::dis(Scene2_Variables::gen);
+				Scene2_Variables::RectColor3.B = Scene2_Variables::dis(Scene2_Variables::gen);
 
-				Scene2_Variables::Rect3_ratio = std::clamp(Scene2_Variables::Rect3_ratio, 0.0001f, 1.0f);
+				
 
-				Scene2_Variables::rect3 = Scene2_Functions::Reduction(Scene2_Variables::rect3, Scene2_Variables::Rect3_ratio);
 			}
+			else if (Scene2_Functions::InsideRect(Scene2_Variables::OriginalRect3, x, y)) {
 
+
+				Scene2_Variables::BackGroundColor.R = Scene2_Variables::dis(Scene2_Variables::gen);
+				Scene2_Variables::BackGroundColor.G = Scene2_Variables::dis(Scene2_Variables::gen);
+				Scene2_Variables::BackGroundColor.B = Scene2_Variables::dis(Scene2_Variables::gen);
+
+			}
 
 
 			if (Scene2_Functions::InsideRect(Scene2_Variables::rect4, x, y)) {
-				std::cout << "Mouse Inside !" << std::endl;
-				Scene2_Variables::Rect4_ratio = Scene2_Variables::Rect4_ratio * Ruduction_Coefficient;
+				Scene2_Variables::RectColor4.R = Scene2_Variables::dis(Scene2_Variables::gen);
+				Scene2_Variables::RectColor4.G = Scene2_Variables::dis(Scene2_Variables::gen);
+				Scene2_Variables::RectColor4.B = Scene2_Variables::dis(Scene2_Variables::gen);
 
-				Scene2_Variables::Rect4_ratio = std::clamp(Scene2_Variables::Rect4_ratio, 0.0001f, 1.0f);
 
-				Scene2_Variables::rect4 = Scene2_Functions::Reduction(Scene2_Variables::rect4, Scene2_Variables::Rect4_ratio);
 			}
+			else if (Scene2_Functions::InsideRect(Scene2_Variables::OriginalRect4, x, y)) {
+
+
+				Scene2_Variables::BackGroundColor.R = Scene2_Variables::dis(Scene2_Variables::gen);
+				Scene2_Variables::BackGroundColor.G = Scene2_Variables::dis(Scene2_Variables::gen);
+				Scene2_Variables::BackGroundColor.B = Scene2_Variables::dis(Scene2_Variables::gen);
+
+			}
+
 
 
 
@@ -339,7 +369,7 @@ GLvoid Scene2_CallbackFunctions::MouseInput(int Button, int state, int x, int y)
 
 			if (Scene2_Functions::InsideRect(Scene2_Variables::rect1, x, y)) {
 				std::cout << "Mouse Inside !" << std::endl;
-				Scene2_Variables::Rect1_ratio = Scene2_Variables::Rect1_ratio * Enrargement_Coefficient;
+				Scene2_Variables::Rect1_ratio = Scene2_Variables::Rect1_ratio * Reduction_Coefficient;
 
 				Scene2_Variables::Rect1_ratio = std::clamp(Scene2_Variables::Rect1_ratio, 0.0001f, 1.0f);
 
@@ -347,33 +377,81 @@ GLvoid Scene2_CallbackFunctions::MouseInput(int Button, int state, int x, int y)
 				Scene2_Variables::rect1 = Scene2_Functions::Reduction(Scene2_Variables::rect1, Scene2_Variables::Rect1_ratio );
 
 			}
+			else if (Scene2_Functions::InsideRect(Scene2_Variables::OriginalRect1, x, y)) {
+				std::cout << "Mouse Inside !" << std::endl;
+				Scene2_Variables::Rect1_ratio = Scene2_Variables::Rect1_ratio * Enrargement_Coefficient;
+
+				Scene2_Variables::Rect1_ratio = std::clamp(Scene2_Variables::Rect1_ratio, 0.0001f, 1.0f);
+
+
+				Scene2_Variables::rect1 = Scene2_Functions::Reduction(Scene2_Variables::rect1, Scene2_Variables::Rect1_ratio);
+
+
+
+
+			}
 
 
 			if (Scene2_Functions::InsideRect(Scene2_Variables::rect2, x, y)) {
 				std::cout << "Mouse Inside !" << std::endl;
-				Scene2_Variables::Rect2_ratio = Scene2_Variables::Rect2_ratio * Enrargement_Coefficient;
+				Scene2_Variables::Rect2_ratio = Scene2_Variables::Rect2_ratio * Reduction_Coefficient;
 
 				Scene2_Variables::Rect2_ratio = std::clamp(Scene2_Variables::Rect2_ratio, 0.0001f, 1.0f);
 
 
 				Scene2_Variables::rect2 = Scene2_Functions::Reduction(Scene2_Variables::rect2, Scene2_Variables::Rect2_ratio );
 			}
+			else if (Scene2_Functions::InsideRect(Scene2_Variables::OriginalRect2, x, y)) {
+				std::cout << "Mouse Inside !" << std::endl;
+				Scene2_Variables::Rect2_ratio = Scene2_Variables::Rect2_ratio * Enrargement_Coefficient;
+
+				Scene2_Variables::Rect2_ratio = std::clamp(Scene2_Variables::Rect2_ratio, 0.0001f, 1.0f);
+
+
+				Scene2_Variables::rect2 = Scene2_Functions::Reduction(Scene2_Variables::rect2, Scene2_Variables::Rect2_ratio);
+
+
+
+
+			}
 
 
 
 			if (Scene2_Functions::InsideRect(Scene2_Variables::rect3, x, y)) {
 				std::cout << "Mouse Inside !" << std::endl;
-				Scene2_Variables::Rect3_ratio = Scene2_Variables::Rect3_ratio * Enrargement_Coefficient;
+				Scene2_Variables::Rect3_ratio = Scene2_Variables::Rect3_ratio * Reduction_Coefficient;
 
 				Scene2_Variables::Rect3_ratio = std::clamp(Scene2_Variables::Rect3_ratio, 0.0001f, 1.0f);
 
 
 				Scene2_Variables::rect3 = Scene2_Functions::Reduction(Scene2_Variables::rect3, Scene2_Variables::Rect3_ratio );
 			}
+			else if (Scene2_Functions::InsideRect(Scene2_Variables::OriginalRect3, x, y)) {
+				std::cout << "Mouse Inside !" << std::endl;
+				Scene2_Variables::Rect3_ratio = Scene2_Variables::Rect3_ratio * Enrargement_Coefficient;
+
+				Scene2_Variables::Rect3_ratio = std::clamp(Scene2_Variables::Rect3_ratio, 0.0001f, 1.0f);
+
+
+				Scene2_Variables::rect3 = Scene2_Functions::Reduction(Scene2_Variables::rect3, Scene2_Variables::Rect3_ratio);
+
+
+
+
+			}
 
 
 
 			if (Scene2_Functions::InsideRect(Scene2_Variables::rect4, x, y)) {
+				std::cout << "Mouse Inside !" << std::endl;
+				Scene2_Variables::Rect4_ratio = Scene2_Variables::Rect4_ratio * Reduction_Coefficient;
+
+				Scene2_Variables::Rect4_ratio = std::clamp(Scene2_Variables::Rect4_ratio, 0.0001f, 1.0f);
+
+
+				Scene2_Variables::rect4 = Scene2_Functions::Reduction(Scene2_Variables::rect4, Scene2_Variables::Rect4_ratio);
+			}
+			else if (Scene2_Functions::InsideRect(Scene2_Variables::OriginalRect4, x, y)) {
 				std::cout << "Mouse Inside !" << std::endl;
 				Scene2_Variables::Rect4_ratio = Scene2_Variables::Rect4_ratio * Enrargement_Coefficient;
 
@@ -381,6 +459,10 @@ GLvoid Scene2_CallbackFunctions::MouseInput(int Button, int state, int x, int y)
 
 
 				Scene2_Variables::rect4 = Scene2_Functions::Reduction(Scene2_Variables::rect4, Scene2_Variables::Rect4_ratio);
+
+
+
+
 			}
 
 
