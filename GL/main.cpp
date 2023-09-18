@@ -25,7 +25,7 @@ int main(int argc, char** argv) {
 	dp::Display_Properties Maindp(WINDOW_INIT_SIZE_WIDTH, WINDOW_INIT_SIZE_HEIGHT, 100, 100);
 	gls::GL_System* GLS = new gls::GL_System(Main_Th, Maindp, "This is Main Display");
 
-
+	
 
 	/*
 	* Can Add new Display like this
@@ -42,11 +42,15 @@ int main(int argc, char** argv) {
 	
 	
 	
-	//GLS->GetMainDisplay()->ResisterCallBackFunc(( Scene2_CallbackFunctions::CreateCallBackFunc() ));
 
+	// Solution #1
 	//GLS->GetMainDisplay()->ResisterCallBackFunc((Scene_1_CallbackFunctions::CreateCallBackFunc()));
 
+	// Solution #2
+	//GLS->GetMainDisplay()->ResisterCallBackFunc(( Scene2_CallbackFunctions::CreateCallBackFunc() ));
 
+
+	//Solution #3
 	GLS->GetMainDisplay()->ResisterCallBackFunc((Scene3::CreateCallBackFunc()));
 
 

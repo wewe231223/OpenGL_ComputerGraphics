@@ -22,8 +22,8 @@
 
 
 */
-#define SQUARE_WIDTH 0.1f 
-#define SQUARE_HEIGHT 0.1f
+#define SQUARE_WIDTH 0.2f 
+#define SQUARE_HEIGHT 0.2f
 
 
 
@@ -101,7 +101,7 @@ void Square::draw() {
 
 	
 	if (this->Picking) {
-		glColor3f(1.0f, 0.0f, 0.0f);
+		glColor3f(1.0f, 1.0f, 1.0f);
 		glBegin(GL_LINE_LOOP);
 
 		glVertex2f(this->DrawCoordinate.LeftDownX, this->DrawCoordinate.LeftDownY);
@@ -158,18 +158,24 @@ Scene3::Scene::Scene() {
 void Scene3::Scene::Click(int Button,int State,int x, int y) {
 
 	if (State == GLUT_DOWN) {
-		for (auto& i : this->Rects) {
-			if (i.Inside(x, y)) {
-				i.Picking = true;
+
+		for (auto iter = this->Rects.rbegin(); iter != this->Rects.rend(); ++iter) {
+			if ((*iter).Inside(x, y)) {
+				(*iter).Picking = true;
 				break;
 			}
 		}
+
+
+
+
 	}
 	else if (State == GLUT_UP) {
 
 		for (auto& i : this->Rects) {
 
 			if (i.Picking) {
+				
 				i.Picking = false;
 			}
 		}
@@ -192,16 +198,18 @@ void Scene3::Scene::Drag(int pixelX, int pixelY) {
 	glX = static_cast<float>(pixelX) / static_cast<float>(Width) * 2.0f - 1.0f;
 	glY = 1.0f - static_cast<float>(pixelY) / static_cast<float>(Height) * 2.0f;
 
+	
 
-	for (auto& i : this->Rects) {
-
-		if (i.Picking) {
-			i.x = glX;
-			i.y = glY;
-
+	for (auto iter = this->Rects.rbegin(); iter != this->Rects.rend(); ++iter) {
+		if ((*iter).Picking) {
+			(*iter).x = glX;
+			(*iter).y = glY;
+			break;
 		}
-
 	}
+
+
+	
 }
 
 void Scene3::Scene::KeyboardDown(unsigned char key){
@@ -214,17 +222,56 @@ void Scene3::Scene::KeyboardDown(unsigned char key){
 		}
 	}
 
+	if (key == 'r') {
+
+		for (auto& i : this->Rects) {
+			i.color.R = ColorGenerater(gen);
+			i.color.G = ColorGenerater(gen);
+			i.color.B = ColorGenerater(gen);
+		}
+
+
+	}
+	
+	if (key == 't') {
+
+
+		this->BackGroundColor.R = ColorGenerater(gen);
+		this->BackGroundColor.G = ColorGenerater(gen);
+		this->BackGroundColor.B = ColorGenerater(gen);
+
+
+
+	}
+
+
 	glutPostRedisplay();
+}
+
+
+void Scene3::Scene::KeyboardUP(unsigned char key) {
+
 }
 
 
 
 
+int FPS = 0;
+std::string FPSstring;
+const std::string inWord("FPS : ");
 
 
 
 GLvoid Scene3::drawScene(GLvoid) {
-	glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
+	FPS += 1;
+	glClearColor(
+		MainScene.BackGroundColor.R, 
+		MainScene.BackGroundColor.G, 
+		MainScene.BackGroundColor.B, 
+		1.0f);
+
+
+
 	glClear(GL_COLOR_BUFFER_BIT);
 
 	for (auto& s : MainScene.Rects) {
@@ -237,6 +284,9 @@ GLvoid Scene3::drawScene(GLvoid) {
 
 GLvoid Scene3::KeyboardCall(unsigned char key, int x, int y) {
 	MainScene.KeyboardDown(key);
+}
+GLvoid Scene3::KeyboardoffCall(unsigned char key, int x, int y) {
+	MainScene.KeyboardUP(key);
 }
 
 GLvoid Scene3::MouseClickCall(int Button, int State, int x, int y) {
@@ -254,6 +304,34 @@ GLvoid Scene3::MouseDragCall(int x, int y){
 
 
 
+
+
+GLvoid Scene3::MyTimer(int value) {
+
+
+	FPSstring.clear();
+	FPSstring += inWord;
+	FPSstring += std::to_string(FPS);
+	FPS = 0;
+	
+	std::cout << FPSstring << std::endl;
+	std::cout << "This is 1s Function !" << std::endl;
+
+
+	glutSetWindowTitle(FPSstring.c_str());
+
+
+
+
+	return glutTimerFunc(1000, Scene3::MyTimer, value);
+	
+}
+
+
+
+
+
+
 CallbackFunc Scene3::CreateCallBackFunc(void) {
 	CallbackFunc Func{};
 
@@ -261,6 +339,8 @@ CallbackFunc Scene3::CreateCallBackFunc(void) {
 	Func.DrawCall = drawScene;
 	Func.MouseCall = MouseClickCall;
 	Func.KeyboardInputCall = KeyboardCall;
+	Func.KeyboardOffCall = KeyboardoffCall;
 	Func.MouseDragCall = MouseDragCall;
+	Func.TimerCall = MyTimer;
 	return Func;
 }

@@ -7,6 +7,7 @@
 #include <iostream>
 #include <random>
 #include <vector>
+#include <string>
 
 #include "Struct.h"
 
@@ -15,7 +16,6 @@
 class Square {
 private:
 	Rect3f DrawCoordinate{};
-	GLColor color;
 
 
 
@@ -23,6 +23,8 @@ private:
 
 
 public:
+	GLColor color;
+
 	float Width;
 	float Height;
 
@@ -44,15 +46,22 @@ namespace Scene3 {
 	class Scene {
 	public:
 		std::vector<Square> Rects;
-
+		GLColor BackGroundColor{0.0f,0.0f,0.0f,1.0f};
+		
+		
 		Scene();
+
+
+
 
 		void Click(int,int,int, int);
 		void Drag(int, int);
 		void KeyboardDown(unsigned char);
+		void KeyboardUP(unsigned char);
+
+
+		
 	};
-
-
 
 
 
@@ -61,7 +70,8 @@ namespace Scene3 {
 	GLvoid MouseClickCall(int, int, int, int);
 	GLvoid MouseDragCall(int, int);
 	GLvoid KeyboardCall(unsigned char, int, int);
-
+	GLvoid KeyboardoffCall(unsigned char, int, int);
+	GLvoid MyTimer(int);
 
 	CallbackFunc CreateCallBackFunc(void);
 }
