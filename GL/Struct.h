@@ -14,6 +14,7 @@ typedef struct _ThreadHandler {
 
 
 typedef struct _CALLBACKFUNC {
+
 	GLvoid(*DrawCall)					(GLvoid)					= nullptr;
 	GLvoid(*ReShapeCall)				(int, int)					= nullptr;
 	GLvoid(*KeyboardInputCall)			(unsigned char, int, int)	= nullptr;

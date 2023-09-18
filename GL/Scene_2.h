@@ -26,12 +26,8 @@ namespace Scene2_CallbackFunctions {
 	GLvoid drawScene(GLvoid);
 	GLvoid ReShape(int, int);
 	GLvoid KeyboardInput(unsigned char, int, int);
-
 	GLvoid MouseInput(int, int, int, int);
-
 	GLvoid MouseDragInput(int,int);
-
-
 	CallbackFunc CreateCallBackFunc(void);
 }
 

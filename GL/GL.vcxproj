@@ -133,6 +133,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Scene_2.cpp" />
     <ClCompile Include="Scene_1.cpp" />
+    <ClCompile Include="Scene_3.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GL_System.h">
@@ -141,6 +142,7 @@
     <ClInclude Include="hhh.h" />
     <ClInclude Include="Scene_2.h" />
     <ClInclude Include="Scene_1.h" />
+    <ClInclude Include="Scene_3.h" />
     <ClInclude Include="Struct.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

@@ -22,7 +22,7 @@ int main(int argc, char** argv) {
 
 
 
-	dp::Display_Properties Maindp(860, 600, 100, 100);
+	dp::Display_Properties Maindp(800, 800, 100, 100);
 	gls::GL_System* GLS = new gls::GL_System(Main_Th, Maindp, "This is Main Display");
 
 
@@ -39,11 +39,15 @@ int main(int argc, char** argv) {
 
 	// if use over 1 display, pleaase change main display
 	GLS->GetMainDisplay()->SetThisWindow();
-
-
+	
+	
+	
 	GLS->GetMainDisplay()->ResisterCallBackFunc(( Scene2_CallbackFunctions::CreateCallBackFunc() ));
 
 	//GLS->GetMainDisplay()->ResisterCallBackFunc((Scene_1_CallbackFunctions::CreateCallBackFunc()));
+
+
+	//GLS->GetMainDisplay()->ResisterCallBackFunc(Scene3_CallbackFunctions::CreateCallBackFunc());
 
 	//glutDisplayFunc(FunctionSet_1::drawScene);
 	//glutReshapeFunc(FunctionSet_1::ReShape);
@@ -54,7 +58,7 @@ int main(int argc, char** argv) {
 	//
 	//glutTimerFunc(1,FunctionSet_1::MyTimer,1);
 
-
+	
 
 
 
