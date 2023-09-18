@@ -22,6 +22,7 @@ typedef struct _CALLBACKFUNC {
 	GLvoid(*ReShapeCall)				(int, int)					= nullptr;
 	GLvoid(*KeyboardInputCall)			(unsigned char, int, int)	= nullptr;
 	GLvoid(*KeyboardSpecialInputCall)	(int, int, int)				= nullptr;
+	GLvoid(*KeyboardSpecialOffCall)		(int, int, int)				= nullptr;
 	GLvoid(*KeyboardOffCall)			(unsigned char, int, int)	= nullptr;
 	GLvoid(*TimerCall)					(int)						= nullptr;
 	GLvoid(*IdleCall)					(GLvoid)					= nullptr;

@@ -93,6 +93,11 @@ void gld::GLDisplay::ResisterCallBackFunc(CallbackFunc Cf)
 		glutSpecialFunc(this->CallBack.KeyboardSpecialInputCall);
 	}
 
+	this->CallBack.KeyboardSpecialOffCall = Cf.KeyboardSpecialOffCall;
+	if (this->CallBack.KeyboardSpecialOffCall != nullptr) {
+		glutSpecialUpFunc(this->CallBack.KeyboardSpecialOffCall);
+	}
+
 
 
 	this->CallBack.ReShapeCall = Cf.ReShapeCall;

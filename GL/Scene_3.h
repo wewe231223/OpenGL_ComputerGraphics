@@ -17,8 +17,10 @@ class Square {
 private:
 	Rect3f DrawCoordinate{};
 
+	Rect3f Mem{};
 
-
+	float vectorX{};
+	float vectorY{};
 
 
 
@@ -34,8 +36,17 @@ public:
 	bool Picking = false;
 
 	Square();
+	Square(int, int);
 
 	void draw();
+
+
+	void VectorMove();
+
+
+	void Mempos();
+	void Rtnpos();
+
 
 	bool Inside(int, int);
 
@@ -44,10 +55,15 @@ public:
 
 namespace Scene3 {
 	class Scene {
+	private:
+		bool Generate_Rand_Position = true;
+		
 	public:
 		std::vector<Square> Rects;
 		GLColor BackGroundColor{0.0f,0.0f,0.0f,1.0f};
 		
+		bool Rects_Move_Following_vector = false;
+
 		
 		Scene();
 
@@ -56,9 +72,10 @@ namespace Scene3 {
 
 		void Click(int,int,int, int);
 		void Drag(int, int);
-		void KeyboardDown(unsigned char);
+		void KeyboardDown(unsigned char,int,int);
 		void KeyboardUP(unsigned char);
-
+		void SpecialKeyDown(int,int,int);
+		void SpecialKeyUp(int, int, int);
 
 		
 	};
@@ -71,7 +88,11 @@ namespace Scene3 {
 	GLvoid MouseDragCall(int, int);
 	GLvoid KeyboardCall(unsigned char, int, int);
 	GLvoid KeyboardoffCall(unsigned char, int, int);
+	GLvoid SpecialKeyboardCall(int, int, int);
+	GLvoid SpecialKeyboardoffCall(int, int, int);
+	
 	GLvoid MyTimer(int);
+
 
 	CallbackFunc CreateCallBackFunc(void);
 }
