@@ -22,7 +22,7 @@ int main(int argc, char** argv) {
 
 
 
-	dp::Display_Properties Maindp(800, 800, 100, 100);
+	dp::Display_Properties Maindp(WINDOW_INIT_SIZE_WIDTH, WINDOW_INIT_SIZE_HEIGHT, 100, 100);
 	gls::GL_System* GLS = new gls::GL_System(Main_Th, Maindp, "This is Main Display");
 
 
@@ -42,23 +42,12 @@ int main(int argc, char** argv) {
 	
 	
 	
-	GLS->GetMainDisplay()->ResisterCallBackFunc(( Scene2_CallbackFunctions::CreateCallBackFunc() ));
+	//GLS->GetMainDisplay()->ResisterCallBackFunc(( Scene2_CallbackFunctions::CreateCallBackFunc() ));
 
 	//GLS->GetMainDisplay()->ResisterCallBackFunc((Scene_1_CallbackFunctions::CreateCallBackFunc()));
 
 
-	//GLS->GetMainDisplay()->ResisterCallBackFunc(Scene3_CallbackFunctions::CreateCallBackFunc());
-
-	//glutDisplayFunc(FunctionSet_1::drawScene);
-	//glutReshapeFunc(FunctionSet_1::ReShape);
-
-	//glutKeyboardFunc(FunctionSet_1::KeyboardInput);
-	//glutKeyboardUpFunc(FunctionSet_1::KeyboardUPInput);
-	//
-	//
-	//glutTimerFunc(1,FunctionSet_1::MyTimer,1);
-
-	
+	GLS->GetMainDisplay()->ResisterCallBackFunc((Scene3::CreateCallBackFunc()));
 
 
 

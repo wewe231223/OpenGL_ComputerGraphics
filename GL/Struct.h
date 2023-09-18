@@ -2,6 +2,9 @@
 #define _GLSYS_STRUCT_NOT_DEFINED
 
 
+#define WINDOW_INIT_SIZE_WIDTH 1200
+#define WINDOW_INIT_SIZE_HEIGHT 800
+
 typedef void GLvoid;
 
 

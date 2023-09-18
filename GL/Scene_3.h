@@ -4,89 +4,64 @@
 #include <gl/freeglut.h>
 #include <gl/freeglut_ext.h>	
 
+#include <iostream>
 #include <random>
 #include <vector>
 
 #include "Struct.h"
 
 
-class Rect{
-public:
 
-	Rect3f r{};
-	GLColor color{};
-	float x;
-	float y;
+class Square {
+private:
+	Rect3f DrawCoordinate{};
+	GLColor color;
+
+
+
+
+
+
+public:
+	float Width;
+	float Height;
+
+	float x; // for GL Coordinate 
+	float y; // for GL Coordinate
+
 	bool Picking = false;
 
-	
-	Rect(const Rect& other) {
-		this->color.R = other.color.R;
-		this->color.G = other.color.G;
-		this->color.B = other.color.B;
-		this->color.A = other.color.A;
+	Square();
 
-		this->r.LeftDownX = other.r.LeftDownX;
-		this->r.LeftDownY = other.r.LeftDownY;
-		this->r.RightUpX = other.r.RightUpX;
-		this->r.RightUpY = other.r.RightUpY;
+	void draw();
 
-		this->x = other.x;
-		this->y = other.y;
-	}
-
-	Rect(float r, float g, float b,float W,float H, float x, float y) {
-		this->color.R = r;
-		this->color.G = g;
-		this->color.B = b;
-		this->color.A = 1.0f;
-
-		float Halfw = W / 2;
-		float Halfh = H / 2;
-
-
-		this->r.LeftDownX = x - Halfw;
-		this->r.LeftDownY = y - Halfh;
-
-		this->r.RightUpX = x + Halfw;
-		this->r.RightUpY = y + Halfh;
-
-
-
-		this->x = x;
-		this->y = y;
-
-	}
-
+	bool Inside(int, int);
 
 };
 
 
+namespace Scene3 {
+	class Scene {
+	public:
+		std::vector<Square> Rects;
+
+		Scene();
+
+		void Click(int,int,int, int);
+		void Drag(int, int);
+		void KeyboardDown(unsigned char);
+	};
 
 
-class Scene_3{
-public:
-	std::vector<Rect> RectArr;
-
-
-public:
-	Scene_3();
 
 
 
-
-};
-
-
-namespace Scene3_CallbackFunctions {
 
 	GLvoid drawScene(GLvoid);
-	CallbackFunc CreateCallBackFunc();
+	GLvoid MouseClickCall(int, int, int, int);
+	GLvoid MouseDragCall(int, int);
+	GLvoid KeyboardCall(unsigned char, int, int);
 
 
-
+	CallbackFunc CreateCallBackFunc(void);
 }
-
-
-
-

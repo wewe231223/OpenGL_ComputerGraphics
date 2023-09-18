@@ -125,9 +125,7 @@ namespace Scene2_Functions {
 
 		ConvertCoordinate(x, y, Glx, Gly);
 
-		//std::cout << Glx << " , " << Gly << std::endl;
-		//std::cout << "Left Down " << std::endl << "( " << r.LeftDownX << " , " << r.LeftDownY << " )" << std::endl;
-		//std::cout << "Right Up " << std::endl << "( " << r.RightUpX << " , " << r.RightUpY << " )" << std::endl;
+
 
 		if (Glx > r.LeftDownX && Glx < r.RightUpX) {
 			if (Gly > r.LeftDownY && Gly < r.RightUpY) {
@@ -261,7 +259,9 @@ GLvoid Scene2_CallbackFunctions::ReShape(int w, int h) {
 GLvoid Scene2_CallbackFunctions::KeyboardInput(unsigned char key, int x, int y) {
 
 
-	
+	if (key == 'q') {
+		exit(EXIT_SUCCESS);
+	}
 
 
 
