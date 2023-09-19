@@ -31,7 +31,7 @@ std::random_device rd;
 std::mt19937 gen(rd());
 std::uniform_real_distribution<float> ColorGenerater(0.f,1.0f);
 std::uniform_real_distribution<float> GLPositionGenerater(-1.0f, 1.0f);
-std::uniform_real_distribution<float> VectorGenerater(-1.0f, 1.0f);
+std::uniform_real_distribution<float> VectorGenerater(-0.005f, 0.005f);
 
 
 
@@ -43,6 +43,11 @@ Square::Square() {
 
 	this->vectorX = VectorGenerater(gen);
 	this->vectorY = VectorGenerater(gen);
+
+
+
+	std::cout << this->vectorX << " , " << this->vectorY << std::endl;
+
 
 
 	this->Width = SQUARE_WIDTH;
@@ -57,6 +62,14 @@ Square::Square() {
 
 	this->Width = SQUARE_WIDTH * (ScreenH * 0.001f);
 	this->Height = SQUARE_HEIGHT * (ScreenW * 0.001f);
+
+
+	this->LeftPivotX = this->x - this->Width / 2;
+	this->RightPivotX = this->x + this->Width / 2;
+
+	this->DownPivotY = this->y - this->Height / 2;
+	this->UpPivotY = this->y + this->Height / 2;
+	
 
 
 
@@ -84,6 +97,7 @@ Square::Square(int pixelX, int pixelY) {
 	this->vectorY = VectorGenerater(gen);
 
 
+	
 
 	this->Width = SQUARE_WIDTH;
 	this->Height = SQUARE_HEIGHT;
@@ -109,6 +123,14 @@ Square::Square(int pixelX, int pixelY) {
 
 	this->Width = SQUARE_WIDTH * (ScreenH * 0.001f);
 	this->Height = SQUARE_HEIGHT * (ScreenW * 0.001f);
+
+
+	this->LeftPivotX = this->x - this->Width / 2;
+	this->RightPivotX = this->x + this->Width / 2;
+
+	this->DownPivotY = this->y - this->Height / 2;
+	this->UpPivotY = this->y + this->Height / 2;
+
 
 
 
@@ -174,44 +196,67 @@ void Square::draw() {
 
 void Square::VectorMove(){
 
+
+
+	
+
+
+
+
+
+
 	this->x = this->x + this->vectorX;
-	this->y = this->y +  this->vectorY;
+	this->y = this->y + this->vectorY;
+
+	this->LeftPivotX = this->x - this->Width / 2;
+	this->RightPivotX = this->x + this->Width / 2;
+
+	this->DownPivotY = this->y - this->Height / 2;
+	this->UpPivotY = this->y + this->Height / 2;
+
+
+	std::cout << LeftPivotX << std::endl;
+
+	this->VectorReflect();
+
+
+
+}
+
+
+void Square::VectorReflect() {
+
+	if (this->LeftPivotX <= -1.0f || this->RightPivotX >= 1.0f) {
+		this->vectorX = -1.0f * this->vectorX;
+	}
+
+
+	if (this->DownPivotY <= -1.0f || this->UpPivotY >= 1.0f) {
+		this->vectorY = -1.0f * this->vectorY;
+	}
+
+	
+
 
 
 }
 
 
 
-
-Scene3::Scene MainScene;
-
-
-
-
-
-void Square::Mempos(){
-	this->Mem.LeftDownX = this->DrawCoordinate.LeftDownX;
-	this->Mem.LeftDownY = this->DrawCoordinate.LeftDownY;
-	this->Mem.RightUpX = this->DrawCoordinate.RightUpX;
-	this->Mem.RightUpY = this->DrawCoordinate.RightUpY;
-
-}
-
-void Square::Rtnpos(){
-	this->DrawCoordinate.LeftDownX = this->Mem.LeftDownX;
-	this->DrawCoordinate.LeftDownY = this->Mem.LeftDownY;
-	this->DrawCoordinate.RightUpX = this->Mem.RightUpX;
-	this->DrawCoordinate.RightUpY = this->Mem.RightUpY;
+void Square::Mempos() {
+	this->memX = x;
+	this->memY = y;
 
 }
 
 
 
+void Square::Rtnpos() {
+	this->x = this->memX;
+	this->y = this->memY;
 
 
-
-
-
+}
 
 
 
@@ -232,6 +277,25 @@ bool Square::Inside(int pixelX, int pixelY) {
 	}
 	return false;
 }
+
+
+Scene3::Scene MainScene;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -258,7 +322,7 @@ void Scene3::Scene::Click(int Button,int State,int x, int y) {
 		}
 
 		if (Button == GLUT_LEFT_BUTTON) {
-			if (!this->Generate_Rand_Position) {
+			if (!this->Generate_Rand_Position && !this->Rects_Move_Following_vector) {
 				if (static_cast<int>(this->Rects.size()) != 5) {
 					Square NewSqare(x,y);
 					this->Rects.push_back(NewSqare);
@@ -318,11 +382,15 @@ void Scene3::Scene::KeyboardDown(unsigned char key,int x,int y){
 	if (this->Generate_Rand_Position) {
 
 		if (key == 'c') {
-			if (static_cast<int>(this->Rects.size()) != 5) {
-				Square NewSqare;
-				this->Rects.push_back(NewSqare);
-				std::cout << "New Square!" << std::endl;
 
+			if (!this->Rects_Move_Following_vector) {
+
+				if (static_cast<int>(this->Rects.size()) != 5) {
+					Square NewSqare;
+					this->Rects.push_back(NewSqare);
+					std::cout << "New Square!" << std::endl;
+
+				}
 			}
 		}
 	}
@@ -369,14 +437,26 @@ void Scene3::Scene::SpecialKeyDown(int key, int x, int y){
 	}
 
 	if (key == GLUT_KEY_CTRL_L) {
-		this->Rects_Move_Following_vector = true;
 
-		for (auto& i : this->Rects) {
-			i.Mempos();
+		if (this->Rects_Move_Following_vector) {
+			this->Rects_Move_Following_vector = false;
+
+			for (auto& i : this->Rects) {
+				i.Rtnpos();
+			}
+
 		}
+		else {
+			this->Rects_Move_Following_vector = true;
 
+			for (auto& i : this->Rects) {
+				i.Mempos();
+			}
 
+		}
 	}
+
+
 
 	glutPostRedisplay();
 
@@ -387,15 +467,7 @@ void Scene3::Scene::SpecialKeyUp(int key, int x, int y ){
 		this->Generate_Rand_Position = true;
 	}
 
-	if (key == GLUT_KEY_CTRL_L) {
-		this->Rects_Move_Following_vector = false;
 
-		for (auto& i : this->Rects) {
-			i.Rtnpos();
-		}
-
-
-	}
 
 
 	glutPostRedisplay();
@@ -485,11 +557,12 @@ GLvoid Scene3::MyTimer(int value) {
 	
 	if (MainScene.Rects_Move_Following_vector) {
 
-		for (auto i : MainScene.Rects) {
+		for (auto& i : MainScene.Rects) {
+			std::cout << "Rect is Moving" << std::endl;
 			i.VectorMove();
 		}
 
-
+		glutPostRedisplay();
 
 	}
 
@@ -498,7 +571,7 @@ GLvoid Scene3::MyTimer(int value) {
 
 
 
-	if (t == 100) {
+	if (t == 1000) {
 		t = 0;
 		playtime = glutGet(GLUT_ELAPSED_TIME) / 1000;
 
@@ -528,7 +601,7 @@ GLvoid Scene3::MyTimer(int value) {
 
 	
 
-	return glutTimerFunc(10, Scene3::MyTimer, value);
+	return glutTimerFunc(1, Scene3::MyTimer, value);
 	
 }
 

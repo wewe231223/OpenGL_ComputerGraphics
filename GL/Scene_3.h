@@ -17,11 +17,17 @@ class Square {
 private:
 	Rect3f DrawCoordinate{};
 
-	Rect3f Mem{};
+	float memX{};
+	float memY{};
 
 	float vectorX{};
 	float vectorY{};
 
+	float LeftPivotX{};
+	float RightPivotX{};
+
+	float UpPivotY{};
+	float DownPivotY{};
 
 
 public:
@@ -42,6 +48,9 @@ public:
 
 
 	void VectorMove();
+	
+	void VectorReflect();
+
 
 
 	void Mempos();
