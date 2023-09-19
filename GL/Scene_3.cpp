@@ -561,6 +561,7 @@ GLvoid Scene3::MyTimer(int value) {
 			std::cout << "Rect is Moving" << std::endl;
 			i.VectorMove();
 		}
+		std::cout << "Moving..." << std::endl;
 
 		glutPostRedisplay();
 
@@ -591,7 +592,6 @@ GLvoid Scene3::MyTimer(int value) {
 	
 
 		std::cout << TotalString << std::endl;
-		std::cout << "PlayTime is : " << playtime / 1000 << std::endl;
 
 
 		
