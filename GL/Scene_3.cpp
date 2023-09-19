@@ -46,7 +46,6 @@ Square::Square() {
 
 
 
-	std::cout << this->vectorX << " , " << this->vectorY << std::endl;
 
 
 
@@ -110,7 +109,6 @@ Square::Square(int pixelX, int pixelY) {
 	this->x = static_cast<float>(pixelX) / glutGet(GLUT_WINDOW_WIDTH) * 2.0f - 1.0f;
 	this->y = 1.0f - static_cast<float>(pixelY) / glutGet(GLUT_WINDOW_HEIGHT) * 2.0f;
 
-	std::cout << x << " , " << y << std::endl;
 
 
 
@@ -195,12 +193,6 @@ void Square::draw() {
 }
 
 void Square::VectorMove(){
-
-
-
-	
-
-
 
 
 
@@ -558,7 +550,6 @@ GLvoid Scene3::MyTimer(int value) {
 	if (MainScene.Rects_Move_Following_vector) {
 
 		for (auto& i : MainScene.Rects) {
-			std::cout << "Rect is Moving" << std::endl;
 			i.VectorMove();
 		}
 		std::cout << "Moving..." << std::endl;
@@ -625,3 +616,4 @@ CallbackFunc Scene3::CreateCallBackFunc(void) {
 	
 	return Func;
 }
+
