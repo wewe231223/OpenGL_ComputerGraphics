@@ -20,6 +20,12 @@ private:
 	float memX{};
 	float memY{};
 
+	float memW{};
+	float memH{};
+
+	float memVX{};
+	float memVY{};
+
 	float vectorX{};
 	float vectorY{};
 
@@ -50,10 +56,18 @@ public:
 	void VectorMove();
 	void VectorReflect();
 
-
+	void Resize();
+	
+	void Memsize();
+	void Rtnsize();
 
 	void Mempos();
 	void Rtnpos();
+
+	void MemVector();
+	void RtnVector();
+	void MoveZ();
+
 
 
 	bool Inside(int, int);
@@ -68,11 +82,12 @@ namespace Scene3 {
 		
 	public:
 		std::vector<Square> Rects;
-		GLColor BackGroundColor{0.0f,0.0f,0.0f,1.0f};
-		
+		GLColor BackGroundColor{0.5f,0.5f,0.5f,1.0f};
 		bool Rects_Move_Following_vector = false;
+		bool size = false;
+		bool Z = false;
 
-		
+
 		Scene();
 
 

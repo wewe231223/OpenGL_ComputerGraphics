@@ -32,7 +32,9 @@ std::mt19937 gen(rd());
 std::uniform_real_distribution<float> ColorGenerater(0.f,1.0f);
 std::uniform_real_distribution<float> GLPositionGenerater(-1.0f, 1.0f);
 std::uniform_real_distribution<float> VectorGenerater(-0.005f, 0.005f);
+std::uniform_real_distribution<float> SizeFactorGenerater(0.5, 2.0);
 
+std::uniform_int_distribution<> rdi(1, 100);
 
 
 Square::Square() {
@@ -40,10 +42,10 @@ Square::Square() {
 	this->color.G = ColorGenerater(gen);
 	this->color.B = ColorGenerater(gen);
 
-
 	this->vectorX = VectorGenerater(gen);
 	this->vectorY = VectorGenerater(gen);
-
+	
+	
 
 
 
@@ -55,12 +57,17 @@ Square::Square() {
 	this->x = GLPositionGenerater(gen);
 	this->y = GLPositionGenerater(gen);
 
+
+	this->Mempos();
+
 	float ScreenW = static_cast<float>(WINDOW_INIT_SIZE_WIDTH);
 	float ScreenH = static_cast<float>(WINDOW_INIT_SIZE_HEIGHT);
 
 
 	this->Width = SQUARE_WIDTH * (ScreenH * 0.001f);
 	this->Height = SQUARE_HEIGHT * (ScreenW * 0.001f);
+
+	this->Memsize();
 
 
 	this->LeftPivotX = this->x - this->Width / 2;
@@ -94,7 +101,7 @@ Square::Square(int pixelX, int pixelY) {
 
 	this->vectorX = VectorGenerater(gen);
 	this->vectorY = VectorGenerater(gen);
-
+	this->MemVector();
 
 	
 
@@ -110,8 +117,7 @@ Square::Square(int pixelX, int pixelY) {
 	this->y = 1.0f - static_cast<float>(pixelY) / glutGet(GLUT_WINDOW_HEIGHT) * 2.0f;
 
 
-
-
+	this->Mempos();
 
 
 
@@ -123,6 +129,8 @@ Square::Square(int pixelX, int pixelY) {
 	this->Height = SQUARE_HEIGHT * (ScreenW * 0.001f);
 
 
+
+	this->Memsize();
 	this->LeftPivotX = this->x - this->Width / 2;
 	this->RightPivotX = this->x + this->Width / 2;
 
@@ -150,16 +158,8 @@ Square::Square(int pixelX, int pixelY) {
 void Square::draw() {
 
 
-
-
-	float ScreenW = static_cast<float>(glutGet(GLUT_WINDOW_WIDTH));
-	float ScreenH = static_cast<float>(glutGet(GLUT_WINDOW_HEIGHT));
-
-
-	this->Width = SQUARE_WIDTH * (ScreenH * 0.001f);
-	this->Height = SQUARE_HEIGHT * (ScreenW * 0.001f);
-
-
+	
+	
 
 
 	this->DrawCoordinate.LeftDownX = this->x - (this->Width / 2);
@@ -167,6 +167,10 @@ void Square::draw() {
 
 	this->DrawCoordinate.RightUpX = this->x + (this->Width / 2);
 	this->DrawCoordinate.RightUpY = this->y + (this->Height / 2);
+
+
+
+
 
 	glColor3f(this->color.R, this->color.G, this->color.B);
 	glRectf(this->DrawCoordinate.LeftDownX, this->DrawCoordinate.LeftDownY,
@@ -207,7 +211,6 @@ void Square::VectorMove(){
 	this->UpPivotY = this->y + this->Height / 2;
 
 
-	std::cout << LeftPivotX << std::endl;
 
 	this->VectorReflect();
 
@@ -235,6 +238,40 @@ void Square::VectorReflect() {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+void Square::Resize() {
+
+	float tempw = this->memW;
+	float temph = this->memH;
+
+
+	this->Width = tempw * SizeFactorGenerater(gen);
+	this->Height = temph * SizeFactorGenerater(gen);
+
+
+}
+
+
+
+
+
+
 void Square::Mempos() {
 	this->memX = x;
 	this->memY = y;
@@ -254,6 +291,8 @@ void Square::Rtnpos() {
 
 bool Square::Inside(int pixelX, int pixelY) {
 
+
+
 	int Width = glutGet(GLUT_WINDOW_WIDTH);
 	int Height = glutGet(GLUT_WINDOW_HEIGHT);
 
@@ -268,28 +307,73 @@ bool Square::Inside(int pixelX, int pixelY) {
 		}
 	}
 	return false;
+
+
+
+}
+
+void Square::Rtnsize(){
+	this->Width = this->memW;
+	this->Height = this->memH;
 }
 
 
+
+void Square::Memsize(){
+	this->memW = this->Width;
+	this->memH = this->Height;
+}
+
+void Square::MemVector(){
+	this->memVX = this->vectorX;
+	this->memVY = this->vectorY;
+
+}
+
+void Square::RtnVector() {
+	this->vectorX = this->memVX;
+	this->vectorY = this->memVY;
+
+
+}
+
+void Square::MoveZ(){
+	
+
+	int temp = rdi(gen);
+
+
+
+	if (temp > 0 && temp < 25) {
+		this->vectorX = 0.01;
+		this->vectorY = 0.01;
+	}
+
+	
+	if (temp >= 25 && temp < 50) {
+		this->vectorX = 0.01;
+		this->vectorY = -0.01;
+
+	}
+
+	if (temp >= 50 && temp < 75) {
+		this->vectorX = -0.01;
+		this->vectorY = 0.01;
+	}
+
+	if (temp >= 75 && temp < 100) {
+		this->vectorX = -0.01;
+		this->vectorY = -0.01;
+	}
+
+	this->VectorReflect();
+
+}
+
+
+
+
 Scene3::Scene MainScene;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 Scene3::Scene::Scene() {
@@ -297,6 +381,7 @@ Scene3::Scene::Scene() {
 	NewSquare.x = 0.0f;
 	NewSquare.y = 0.0f;
 	this->Rects.push_back(NewSquare);
+
 }
 
 
@@ -415,6 +500,86 @@ void Scene3::Scene::KeyboardDown(unsigned char key,int x,int y){
 		std::vector<Square>().swap(this->Rects);
 	}
 
+
+	if (key == 'm') {
+
+		for (auto& i : this->Rects) {
+			i.Rtnpos();
+		}
+
+	}
+
+
+	if (key == 'k') {
+		
+		if (this->size) {
+
+			for (auto& i : this->Rects) {
+				i.Rtnsize();
+			}
+
+			this->size = false;
+		}
+		else {
+			
+			for (auto& i : this->Rects) {
+				i.Memsize();
+			}
+
+			this->size = true;
+
+
+		}
+
+
+	}
+	
+	if (key == 'l') {
+
+		if (this->Z) {
+
+			for (auto& i : this->Rects) {
+				i.RtnVector();
+			}
+
+			this->Z = false;
+		}
+		else {
+			for (auto& i : this->Rects) {
+
+				i.MoveZ();
+
+
+			}
+
+			this->Z = true;
+		}
+
+
+
+	}
+
+
+
+
+	if (key == ' ') {
+
+		if (this->Rects_Move_Following_vector) {
+			this->Rects_Move_Following_vector = false;
+		} else{
+			this->Rects_Move_Following_vector = true;
+		}
+
+	}
+	
+
+	if (key == 'q') {
+		exit(EXIT_SUCCESS);
+	}
+
+
+
+
 	glutPostRedisplay();
 }
 
@@ -428,27 +593,7 @@ void Scene3::Scene::SpecialKeyDown(int key, int x, int y){
 		this->Generate_Rand_Position = false;
 	}
 
-	if (key == GLUT_KEY_CTRL_L) {
-
-		if (this->Rects_Move_Following_vector) {
-			this->Rects_Move_Following_vector = false;
-
-			for (auto& i : this->Rects) {
-				i.Rtnpos();
-			}
-
-		}
-		else {
-			this->Rects_Move_Following_vector = true;
-
-			for (auto& i : this->Rects) {
-				i.Mempos();
-			}
-
-		}
-	}
-
-
+	
 
 	glutPostRedisplay();
 
@@ -552,13 +697,24 @@ GLvoid Scene3::MyTimer(int value) {
 		for (auto& i : MainScene.Rects) {
 			i.VectorMove();
 		}
-		std::cout << "Moving..." << std::endl;
 
-		glutPostRedisplay();
 
 	}
 
 	
+	if (MainScene.size) {
+		for (auto& i : MainScene.Rects) {
+			i.Resize();
+		}
+
+	}
+
+
+	if (MainScene.Z) {
+		for (auto& i : MainScene.Rects) {
+			i.MoveZ();
+		}
+	}
 
 
 
@@ -590,7 +746,7 @@ GLvoid Scene3::MyTimer(int value) {
 	}
 
 
-	
+	glutPostRedisplay();
 
 	return glutTimerFunc(1, Scene3::MyTimer, value);
 	
